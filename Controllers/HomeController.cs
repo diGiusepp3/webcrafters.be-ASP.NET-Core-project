@@ -15,6 +15,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        ViewData["Title"] = "Webcrafters — Home";
         return View();
     }
 
