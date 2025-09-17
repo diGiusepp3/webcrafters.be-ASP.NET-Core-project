@@ -63,6 +63,7 @@ node_modules/
 
 # Specifieke keys map
 Keys/
+Keypairs
 transip-api.key
 
 # Config met secrets
