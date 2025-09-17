@@ -1,8 +1,104 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model webcrafters.be_ASP.NET_Core_project.Models.SiteSettings
+@{
+    ViewData["Title"] = "Home";
 }
+@await Html.PartialAsync("_Hero", Model)
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Diensten -->
+<section id="diensten" class="relative w-full py-20">
+    <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-white">Onze Diensten</h2>
+        <p class="text-gray-400 mt-3">Van idee tot productie, wij brengen jouw visie tot leven.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto px-6">
+        <div class="bg-gray-800/60 rounded-xl shadow-lg p-6 border border-gray-700 hover:border-green-500 hover:shadow-green-500/20 transition">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="inline-block w-3 h-3 bg-green-500 rounded-full"></span>
+                <h3 class="text-xl font-semibold text-white">Webontwikkeling</h3>
+            </div>
+            <p class="text-gray-400">Moderne websites met .NET, PHP, React en meer.</p>
+        </div>
+        <div class="bg-gray-800/60 rounded-xl shadow-lg p-6 border border-gray-700 hover:border-green-500 hover:shadow-green-500/20 transition">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="inline-block w-3 h-3 bg-green-500 rounded-full"></span>
+                <h3 class="text-xl font-semibold text-white">Softwareontwikkeling</h3>
+            </div>
+            <p class="text-gray-400">Cross-platform apps in C# &amp; MAUI met focus op prestaties.</p>
+        </div>
+        <div class="bg-gray-800/60 rounded-xl shadow-lg p-6 border border-gray-700 hover:border-green-500 hover:shadow-green-500/20 transition">
+            <div class="flex items-center gap-2 mb-3">
+                <span class="inline-block w-3 h-3 bg-green-500 rounded-full"></span>
+                <h3 class="text-xl font-semibold text-white">Serverbeheer</h3>
+            </div>
+            <p class="text-gray-400">Ubuntu, MySQL, Apache, cloud hosting en DevOps integratie.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio -->
+<section id="portfolio" class="relative w-full py-20 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Ons Werk</h2>
+            <p class="mt-4 text-gray-400 text-lg max-w-2xl mx-auto">
+                Van mobiele apps tot enterprise webshops – enkele realisaties waar we trots op zijn.
+            </p>
+        </div>
+
+        <!-- Grid -->
+        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+
+            <!-- Listen! (paars accent) -->
+            <div class="group relative bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:shadow-purple-500/30 hover:border-purple-500 transition flex flex-col">
+                <div class="h-40 bg-center bg-cover flex items-center justify-center"
+                     style="background-image: url('/img/portfolio/listen.png');">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition"></div>
+                </div>
+                <div class="flex-1 p-6 flex flex-col relative z-10">
+                    <h3 class="text-xl font-semibold text-white group-hover:text-purple-400 transition mb-2">
+                        Listen! Muziekstreaming
+                    </h3>
+                    <p class="text-gray-400 text-sm flex-1">
+                        Cross-platform <span class="text-white">.NET MAUI app</span> met een eigen API en MySQL-backend. 
+                        Functies zoals playlists, offline caching en YouTube integratie.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Windels (groen accent) -->
+            <div class="group relative bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:shadow-green-500/30 hover:border-green-500 transition flex flex-col">
+                <div class="h-40 bg-center bg-contain bg-no-repeat flex items-center justify-center"
+                     style="background-image: url('/img/portfolio/windels.png');">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition"></div>
+                </div>
+                <div class="flex-1 p-6 flex flex-col relative z-10">
+                    <h3 class="text-xl font-semibold text-white group-hover:text-green-400 transition mb-2">
+                        Windels Green &amp; Deco Resin
+                    </h3>
+                    <p class="text-gray-400 text-sm flex-1">
+                        Een volledig <span class="text-white">e-commerce ecosysteem</span> met dynamische producten, 
+                        verzendintegraties (MyParcel, DPD), facturatie (Onfact API) en multi-domein beheer.
+                    </p>
+                </div>
+            </div>
+
+            <!-- HomeManager (groen accent) -->
+            <div class="group relative bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:shadow-orange-500/30 hover:border-orange-500 transition flex flex-col">
+                <div class="h-40 bg-center bg-contain bg-no-repeat flex items-center justify-center"
+                     style="background-image: url('/img/portfolio/homemanager.png');">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition"></div>
+                </div>
+                <div class="flex-1 p-6 flex flex-col relative z-10">
+                    <h3 class="text-xl font-semibold text-white group-hover:text-orange-400 transition mb-2">
+                        HomeManager
+                    </h3>
+                    <p class="text-gray-400 text-sm flex-1">
+                        Software voor <span class="text-white">beheer en automatisatie</span>. 
+                        Focus op gebruiksvriendelijke interfaces, data-opslag en multi-platform toegankelijkheid.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

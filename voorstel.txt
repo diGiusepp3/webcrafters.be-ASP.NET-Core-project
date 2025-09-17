@@ -1,0 +1,68 @@
+﻿📊 Voorstel roadmap
+1. Ontwerp & branding
+
+Layout: modern, strak, niet té zwaar → Bootstrap of Tailwind.
+
+Kleuren: zwart/wit + accentkleur (bijv. oranje of blauw) → consistent met je logo.
+
+Hero section: korte slogan (“Creativiteit, Code & Passie”) met call-to-action (“Neem contact op” / “Vraag offerte”).
+
+Icons/illustraties: custom SVG’s voor diensten.
+
+Responsiveness: mobiel moet top zijn.
+
+2. Pagina’s & inhoud
+
+Home → overzicht + CTA.
+
+Diensten (Webontwikkeling, Software in .NET, Serverbeheer, Multi-platform MAUI, PHP/MySQL, enz.).
+
+Portfolio (Windels Green & Deco Resin, Listen!, Last Z tools, SurvivalFortress, etc.).
+
+Blog/Updates → nieuws, tutorials, showcases.
+
+Contact → formulier (met captcha), links naar socials, e-mail.
+
+3. Functionaliteit
+
+Domeinnaam checker → werkt al met je TransIP backend → mooie frontend UI bouwen.
+
+Offerte aanvragen (form met mail).
+
+Portfolio cards (per project clickable detailpagina).
+
+Privacybeleid / voorwaarden (je hebt al een begin).
+
+Zoekfunctie in blog/portfolio.
+
+4. SEO & marketing
+
+Meta tags per pagina (title, description, keywords).
+
+Sitemap.xml + robots.txt.
+
+Performance (compressie, caching).
+
+Analytics integreren (bv. Plausible of Google Analytics).
+
+5. Technisch polish
+
+_Layout.cshtml → dynamische SiteName + LogoPath.
+
+Partial views voor navigatie/footer.
+
+appsettings.json uitbreiden voor sociale links (GitHub, LinkedIn, etc.).
+
+Logging (serilog of built-in).
+
+Eventueel database voor blogposts & portfolio (MySQL integratie).
+
+🔜 Eerste focus
+
+Ik stel voor:
+
+_Layout.cshtml maken met dynamisch logo, menu, footer.
+
+Hero section op Index.cshtml → modern design, met jouw slogan en CTA-knop.
+
+Daarna stap voor stap: diensten + portfolio.

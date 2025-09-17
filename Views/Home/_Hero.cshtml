@@ -1,0 +1,48 @@
+﻿<!-- FILE: Views/Home/_Hero.cshtml -->
+@using webcrafters.be_ASP.NET_Core_project.Models
+@model SiteSettings
+
+<!-- Hero -->
+<section class="relative w-full bg-gradient-to-b from-black via-gray-900 to-black">
+    <div class="w-full px-6 py-16 sm:py-20 md:py-24 grid md:grid-cols-2 gap-12 items-center">
+        
+        <!-- Tekst -->
+        <div class="max-w-2xl">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight">
+                <span class="text-white">Creativiteit, </span>
+                <span class="text-orange-500">Code</span>
+                <span class="text-white">&amp; Passie</span>
+            </h1>
+            <p class="mt-6 text-base sm:text-lg text-gray-400">
+                Wij bouwen digitale ervaringen die <span class="font-semibold text-white">impact maken</span>. 
+                Of het nu gaat om webontwikkeling, software of serverbeheer – wij maken het future-proof.
+            </p>
+            <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                <a href="#diensten" class="px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg text-lg font-semibold shadow-lg transition text-center">
+                    Ontdek onze diensten
+                </a>
+                <a href="#portfolio" class="px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-lg text-lg font-semibold transition text-center">
+                    Bekijk portfolio
+                </a>
+            </div>
+        </div>
+
+        <!-- Code preview -->
+        <div class="bg-gray-900 border border-gray-800 rounded-xl shadow-2xl overflow-hidden">
+            <div class="bg-gray-800 px-4 py-2 flex gap-2">
+                <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+                <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+                <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+            </div>
+            <pre class="p-6 text-xs sm:text-sm text-purple-300 whitespace-pre-wrap break-words">
+<span class="text-green-400">public class</span> <span class="text-orange-400">Webcrafters</span>
+{
+    <span class="text-green-400">public string</span> Services =&gt; <span class="text-yellow-400">"Web, Software, Serverbeheer"</span>;
+    <span class="text-green-400">public void</span> Build(string idea) {
+        Console.WriteLine(<span class="text-yellow-400">"🚀 Transformed into reality!"</span>);
+    }
+}
+</pre>
+        </div>
+    </div>
+</section>

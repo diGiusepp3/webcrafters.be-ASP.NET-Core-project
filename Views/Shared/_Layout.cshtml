@@ -1,50 +1,62 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using webcrafters.be_ASP.NET_Core_project.Models
+@model SiteSettings
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - webcrafters.be_ASP.NET_Core_project</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/webcrafters.be_ASP.NET_Core_project.styles.css" asp-append-version="true"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @Model.SiteName</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">webcrafters.be</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+<body class="bg-black text-gray-200 font-sans antialiased">
+
+    <!-- Navigatie -->
+<header class="bg-black/80 backdrop-blur sticky top-0 z-50 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-2 text-xl font-bold text-white">
+            <span>@Model.SiteName</span>
+        </a>
+        <!-- Desktop menu -->
+        <nav class="hidden md:flex">
+            <ul class="flex gap-8 text-sm font-medium">
+                <li><a href="/" class="hover:text-purple-400 transition">Home</a></li>
+                <li><a href="/Home/Privacy" class="hover:text-purple-400 transition">Diensten</a></li>
+                <li><a href="/Home/Privacy" class="hover:text-purple-400 transition">Portfolio</a></li>
+                <li><a href="/Home/Privacy" class="hover:text-purple-400 transition">Blog</a></li>
+                <li><a href="/Home/Privacy" class="hover:text-purple-400 transition">Contact</a></li>
+            </ul>
+        </nav>
+        <!-- Hamburger voor mobiel -->
+        <button class="md:hidden text-gray-200 hover:text-white focus:outline-none" id="menu-toggle">
+            ☰
+        </button>
+    </div>
+    <!-- Mobile dropdown -->
+    <nav id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+        <ul class="flex flex-col gap-4 text-sm font-medium">
+            <li><a href="/" class="hover:text-purple-400 transition">Home</a></li>
+            <li><a href="/Home/Privacy" class="hover:text-purple-400 transition">Diensten</a></li>
+            <li><a href="/Home/Privacy" class="hover:text-purple-400 transition">Portfolio</a></li>
+            <li><a href="/Home/Privacy" class="hover:text-purple-400 transition">Blog</a></li>
+            <li><a href="/Home/Privacy" class="hover:text-purple-400 transition">Contact</a></li>
+        </ul>
     </nav>
 </header>
-<div class="container">
-    <main role="main" class="pb-3">
+
+    <!-- Content -->
+    <main class="max-w-7xl mx-auto px-6 py-16">
         @RenderBody()
     </main>
-</div>
 
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2025 - webcrafters.be built with ASP.NET_Core - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </div>
-</footer>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
+    <!-- Footer -->
+    <footer class="bg-black border-t border-gray-800 py-8 text-center text-gray-500 text-sm">
+        <p>&copy; @DateTime.Now.Year @Model.SiteName – Alle rechten voorbehouden.</p>
+        <div class="mt-3 flex justify-center gap-6">
+            <a href="https://github.com/diGiusepp3" target="_blank" class="hover:text-white">GitHub</a>
+            <a href="https://www.linkedin.com/in/matthias-gielen" target="_blank" class="hover:text-white">LinkedIn</a>
+        </div>
+    </footer>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
