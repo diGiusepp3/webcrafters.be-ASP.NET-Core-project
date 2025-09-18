@@ -65,6 +65,9 @@ node_modules/
 Keys/
 Keypairs
 transip-api.key
+Keypairs/
+MKeypairs/
+
 
 # Config met secrets
 appsettings.Development.json

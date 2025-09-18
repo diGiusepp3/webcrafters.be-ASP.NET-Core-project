@@ -1,36 +1,20 @@
-﻿# FILE: deploy.ps1
-# Powershell script voor automatische deploy naar asp.webcrafters.be
-
-# Config
-$projectPath = "C:\Users\matth\RiderProjects\webcrafters.be-ASP.NET-Core-project"
-$publishDir  = "$projectPath\publish"
+﻿$projectPath = "C:\Users\matth\RiderProjects\webcrafters.be-ASP.NET-Core-project"
+$publishPath = "C:\out\webcrafters"  # nieuwe outputlocatie
 $serverUser  = "matthias"
 $serverHost  = "mgielen.zapto.org"
 $serverPath  = "/var/www/asp.webcrafters.be"
-$serviceName = "asp-webcrafters"
+$serviceName = "webcrafters-asp-web.service"
 
-Write-Host "🚀 Stap 1: Clean & Publish..."
-dotnet publish "$projectPath" -c Release -o $publishDir
-
-if ($LASTEXITCODE -ne 0) {
-    Write-Error "❌ Publish gefaald!"
-    exit 1
+# Schoonmaken
+if (Test-Path $publishPath) {
+    Remove-Item -Recurse -Force $publishPath
 }
 
-Write-Host "📦 Stap 2: Upload naar server..."
-scp -r "$publishDir\*" "${serverUser}@${serverHost}:${serverPath}/"
+# Build
+dotnet publish $projectPath -c Release -o $publishPath
 
-if ($LASTEXITCODE -ne 0) {
-    Write-Error "❌ Upload gefaald!"
-    exit 1
-}
+# Upload enkel inhoud
+scp -r "${publishPath}\*" "${serverUser}@${serverHost}:${serverPath}/"
 
-Write-Host "🔄 Stap 3: Restart systemd service..."
-ssh "$serverUser@$serverHost" "sudo systemctl restart $serviceName && sudo systemctl status $serviceName --no-pager -l"
-
-if ($LASTEXITCODE -ne 0) {
-    Write-Error "❌ Restart gefaald!"
-    exit 1
-}
-
-Write-Host "✅ Deploy succesvol afgerond! Bezoek https://asp.webcrafters.be"
+# Restart service
+ssh "${serverUser}@${serverHost}" "sudo systemctl restart ${serviceName}"

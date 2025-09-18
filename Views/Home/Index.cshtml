@@ -51,7 +51,7 @@
             <!-- Listen! (paars accent) -->
             <div class="group relative bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:shadow-purple-500/30 hover:border-purple-500 transition flex flex-col">
                 <div class="h-40 bg-center bg-cover flex items-center justify-center"
-                     style="background-image: url('/img/portfolio/listen.png');">
+                     style="background-image: url('@Url.Content("~/img/portfolio/listen.png")');">
                     <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition"></div>
                 </div>
                 <div class="flex-1 p-6 flex flex-col relative z-10">
@@ -68,7 +68,7 @@
             <!-- Windels (groen accent) -->
             <div class="group relative bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:shadow-green-500/30 hover:border-green-500 transition flex flex-col">
                 <div class="h-40 bg-center bg-contain bg-no-repeat flex items-center justify-center"
-                     style="background-image: url('/img/portfolio/windels.png');">
+                     style="background-image: url('@Url.Content("~/img/portfolio/windels.png")');">
                     <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition"></div>
                 </div>
                 <div class="flex-1 p-6 flex flex-col relative z-10">
@@ -85,7 +85,7 @@
             <!-- HomeManager (groen accent) -->
             <div class="group relative bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:shadow-orange-500/30 hover:border-orange-500 transition flex flex-col">
                 <div class="h-40 bg-center bg-contain bg-no-repeat flex items-center justify-center"
-                     style="background-image: url('/img/portfolio/homemanager.png');">
+                     style="background-image: url('@Url.Content("~/img/portfolio/homemanager.png")');">
                     <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition"></div>
                 </div>
                 <div class="flex-1 p-6 flex flex-col relative z-10">
@@ -102,3 +102,53 @@
         </div>
     </div>
 </section>
+
+
+<!-- Extra sectie: Waarom WebCrafters -->
+<section class="relative w-full py-20 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-white">Waarom kiezen voor WebCrafters?</h2>
+        <p class="text-gray-400 mt-4 max-w-2xl mx-auto">
+            Niet zomaar een webbouwer – maar jouw partner voor digitale groei.
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-8 mt-12">
+            <div class="bg-gray-800/60 rounded-xl shadow-lg p-6 border border-gray-700 hover:border-purple-500 hover:shadow-purple-500/30 transition">
+                <h3 class="text-xl font-semibold text-white mb-3">Alles onder één dak</h3>
+                <p class="text-gray-400">Websites, apps, servers en support. Je hoeft nooit te schakelen tussen verschillende partijen.</p>
+            </div>
+            <div class="bg-gray-800/60 rounded-xl shadow-lg p-6 border border-gray-700 hover:border-green-500 hover:shadow-green-500/30 transition">
+                <h3 class="text-xl font-semibold text-white mb-3">Technische diepgang</h3>
+                <p class="text-gray-400">C#, .NET, MAUI, React, MySQL, Ubuntu servers – gebouwd met passie en performance in gedachten.</p>
+            </div>
+            <div class="bg-gray-800/60 rounded-xl shadow-lg p-6 border border-gray-700 hover:border-orange-500 hover:shadow-orange-500/30 transition">
+                <h3 class="text-xl font-semibold text-white mb-3">Future-proof</h3>
+                <p class="text-gray-400">Schaalbare oplossingen die meegroeien met jouw business. Start klein, groei groot.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Extra sectie: Call to Action -->
+<section class="relative w-full py-20 bg-black border-t border-gray-800">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Klaar om jouw idee te lanceren?</h2>
+        <p class="text-gray-400 mb-10">
+            Samen brengen we jouw concept tot leven – met een snelle, persoonlijke en resultaatgerichte aanpak.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/Contact" class="px-8 py-4 bg-purple-600 hover:bg-purple-700 rounded-lg text-lg font-semibold shadow-lg transition text-white">
+                Vraag een offerte
+            </a>
+            <a href="/Portfolio" class="px-8 py-4 bg-gray-800 hover:bg-gray-700 rounded-lg text-lg font-semibold transition text-white">
+                Bekijk ons werk
+            </a>
+        </div>
+    </div>
+</section>
+
+@await Html.PartialAsync("_Blogs", Model)
+
+@await Html.PartialAsync("_Technology")
+
+

@@ -1,0 +1,48 @@
+﻿@model webcrafters.be_ASP.NET_Core_project.Models.Blog
+
+<div class="max-w-3xl mx-auto py-12 px-6">
+    <h1 class="text-4xl font-bold mb-4">@Model.BlogTitel</h1>
+    <p class="text-gray-400 mb-8">
+        Door <span class="text-white">@Model.BlogAutheur</span> 
+        op @Model.BlogToegevoegd.ToString("dd MMMM yyyy")
+    </p>
+
+    @if (!string.IsNullOrEmpty(Model.BlogMainImage))
+    {
+        <img src="/img/blog/@Model.BlogMainImage"
+             alt="@Model.BlogTitel"
+             class="rounded-xl mb-8 shadow-lg" />
+    }
+
+    <h2 class="text-xl text-gray-300 mb-4">@Model.BlogOndertitel</h2>
+
+    <div class="prose prose-invert max-w-none">
+        @if (!string.IsNullOrEmpty(Model.BlogTekst1))
+        {
+            <p>@Html.Raw(Model.BlogTekst1)</p>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.BlogTussentitel1))
+        {
+            <h3>@Model.BlogTussentitel1</h3>
+            <p>@Html.Raw(Model.BlogTekst2)</p>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.BlogTussentitel2))
+        {
+            <h3>@Model.BlogTussentitel2</h3>
+            <p>@Html.Raw(Model.BlogTekst3)</p>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.BlogTussentitel3))
+        {
+            <h3>@Model.BlogTussentitel3</h3>
+        }
+    </div>
+
+    <div class="mt-8">
+        <a href="@Url.Action("Index", "Blog")" class="text-purple-400 hover:underline">
+            ← Terug naar overzicht
+        </a>
+    </div>
+</div>

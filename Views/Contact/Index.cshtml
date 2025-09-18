@@ -1,5 +1,4 @@
-﻿@page
-@model webcrafters.be_ASP.NET_Core_project.Pages.Contact.ContactModel
+﻿@model webcrafters.be_ASP.NET_Core_project.Models.SiteSettings
 @{
     ViewData["Title"] = "Contact";
 }
@@ -8,13 +7,13 @@
 @if (TempData["Success"] != null)
 {
     <div class="bg-green-600/20 text-green-400 border border-green-500 rounded-lg px-4 py-3 mb-6">
-        <code>Console.WriteLine("✅ @TempData["Success"]");</code>
+        <p>Bericht verzonden</p>
+        <code>Response("✅ @TempData["Success"]");</code>
     </div>
 }
 
 <section class="relative w-full py-20 bg-gradient-to-b from-black via-gray-900 to-black">
     <div class="max-w-4xl mx-auto px-6">
-        <!-- Titel -->
         <div class="text-center mb-12">
             <h1 class="text-3xl md:text-4xl font-extrabold text-white">Contacteer ons</h1>
             <p class="text-gray-400 mt-3">
@@ -22,30 +21,27 @@
             </p>
         </div>
 
-        <!-- Code editor style form -->
         <div class="bg-gray-900 border border-gray-800 rounded-xl shadow-2xl overflow-hidden">
-            <!-- Fake editor topbar -->
             <div class="bg-gray-800 px-4 py-2 flex gap-2">
                 <span class="w-3 h-3 bg-red-500 rounded-full"></span>
                 <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
                 <span class="w-3 h-3 bg-green-500 rounded-full"></span>
             </div>
 
-            <!-- Form -->
             <form method="post" class="p-6 space-y-6">
                 <pre class="text-purple-300 text-sm whitespace-pre-wrap break-words">
 <span class="text-green-400">public class</span> <span class="text-orange-400">ContactForm</span>
 {
     <span class="text-green-400">public string</span> Name =&gt; 
-        <input asp-for="Name" placeholder="Jouw naam" required
+        <input name="Name" placeholder="Jouw naam" required
                class="bg-transparent border-b border-gray-600 focus:border-purple-500 focus:outline-none w-full text-white placeholder-gray-500" />;
 
     <span class="text-green-400">public string</span> Email =&gt; 
-        <input asp-for="Email" type="email" placeholder="jij@email.com" required
+        <input name="Email" type="email" placeholder="jij@email.com" required
                class="bg-transparent border-b border-gray-600 focus:border-purple-500 focus:outline-none w-full text-white placeholder-gray-500" />;
 
     <span class="text-green-400">public string</span> Message =&gt; 
-        <textarea asp-for="Message" rows="4" placeholder="Typ hier je bericht..." required
+        <textarea name="Message" rows="4" placeholder="Typ hier je bericht..." required
                class="bg-transparent border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none w-full text-white placeholder-gray-500 mt-2"></textarea>;
 }
                 </pre>

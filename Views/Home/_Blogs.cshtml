@@ -1,0 +1,37 @@
+﻿@model webcrafters.be_ASP.NET_Core_project.Models.SiteSettings
+
+<section id="blogs" class="relative w-full py-20 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Laatste Blogs</h2>
+            <p class="mt-4 text-gray-400 text-lg max-w-2xl mx-auto">
+                Updates, tips en inzichten uit onze digitale wereld.
+            </p>
+        </div>
+
+        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            @foreach (var blog in Model.Blogs)
+            {
+                <a href="@Url.Action("Details", "Blog", new { id = blog.BlogId })"
+                   class="group relative bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:shadow-purple-500/30 hover:border-purple-500 transition flex flex-col">
+                    
+                    <div class="h-40 bg-center bg-cover flex items-center justify-center"
+                         style="background-image: url('/img/blog/@blog.BlogMainImage');">
+                        <div class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition"></div>
+                    </div>
+
+                    <div class="flex-1 p-6 flex flex-col relative z-10">
+                        <h3 class="text-xl font-semibold text-white group-hover:text-purple-400 transition mb-2">
+                            @blog.BlogTitel
+                        </h3>
+                        <p class="text-gray-400 text-sm flex-1">@blog.BlogOndertitel</p>
+                        <div class="mt-4 text-xs text-gray-500">
+                            Door <span class="text-white">@blog.BlogAutheur</span> 
+                            op @blog.BlogToegevoegd.ToString("dd MMM yyyy")
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+</section>
