@@ -29,7 +29,9 @@ public class HomeController : Controller
 
         var blogs = await _context.Blogs
             .OrderByDescending(b => b.BlogToegevoegd)
+            .Take(3)   // ✅ enkel de laatste 3
             .ToListAsync();
+
 
         _settings.Blogs = blogs;
 

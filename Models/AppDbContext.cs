@@ -11,10 +11,12 @@ namespace webcrafters.be_ASP.NET_Core_project.Models
 
         public DbSet<ContactMessage> ContactMessages { get; set; }
         public DbSet<Blog> Blogs { get; set; }  // ✅ Blogs toevoegen
-
+        public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            
+            modelBuilder.Entity<User>().ToTable("users");
 
             // ContactMessages
             modelBuilder.Entity<ContactMessage>(entity =>

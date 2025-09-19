@@ -1,0 +1,27 @@
+{
+  "name": "webcrafters.be-asp.net-core-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev:css": "node ./node_modules/tailwindcss/lib/cli.js -i ./wwwroot/css/site.css -o ./wwwroot/css/dist.css --watch",
+    "build:css": "node ./node_modules/tailwindcss/lib/cli.js -i ./wwwroot/css/site.css -o ./wwwroot/css/dist.css --minify"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diGiusepp3/webcrafters.be-ASP.NET-Core-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diGiusepp3/webcrafters.be-ASP.NET-Core-project/issues"
+  },
+  "homepage": "https://github.com/diGiusepp3/webcrafters.be-ASP.NET-Core-project#readme",
+  "description": "",
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17"
+  }
+}

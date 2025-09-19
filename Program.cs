@@ -36,6 +36,14 @@ builder.Services.AddSingleton<SmsService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
+// Sessions
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<SessionService>();
+
+
+
 var app = builder.Build();
 
 // ✅ Middleware pipeline
@@ -49,6 +57,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();   // voor bestanden in wwwroot
 app.UseRouting();
 app.UseAuthorization();
+app.UseSession();
 
 // ✅ routes
 app.MapControllerRoute(

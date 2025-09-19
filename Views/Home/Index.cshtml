@@ -35,6 +35,9 @@
     </div>
 </section>
 
+<!-- Domainname orders -->
+@await Html.PartialAsync("_DomainOrder", Model)
+
 <!-- Portfolio -->
 <section id="portfolio" class="relative w-full py-20 border-t border-gray-800">
     <div class="max-w-7xl mx-auto px-6">
@@ -147,8 +150,17 @@
     </div>
 </section>
 
+<!-- Blogs -->
 @await Html.PartialAsync("_Blogs", Model)
 
-@await Html.PartialAsync("_Technology")
+<!-- Gebruikte tech -->
+@await Html.PartialAsync("_Technology", Model)
+
+<!-- FAQ -->
+@await Html.PartialAsync("_Faq", Model)
+
+<!-- Image generator -->
+@await Html.PartialAsync("_ImageGenerator", Model)
+
 
 

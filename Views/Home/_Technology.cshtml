@@ -1,9 +1,33 @@
 ﻿@* Views/Shared/_Technology.cshtml *@
-<section id="technologie" class="relative w-full py-20 border-t border-gray-800">
+<section id="technologie" class="relative w-full py-20 border-t border-gray-800 bg-gradient-to-t from-cyan-900 via-black to-black overflow-hidden">
     <div class="max-w-7xl mx-auto px-6">
         <div class="text-center mb-12">
             <h2 class="text-3xl md:text-4xl font-extrabold text-white">Onze Technologie</h2>
-            <p class="text-gray-400 mt-3">
+
+            <!-- Oneindige slider -->
+            <div class="relative mt-12 overflow-hidden">
+                <div class="flex tech-animate space-x-16 opacity-80">
+                    <!-- Icons (dubbel geplaatst voor seamless loop) -->
+                    <div class="flex space-x-16">
+                        <img src="/img/tech/dotnet-webcrafters-be.svg" alt=".NET" class="h-14" />
+                        <img src="/img/tech/csharp-webcrafters-be.svg" alt="C#" class="h-14" />
+                        <img src="/img/tech/react-webcrafters-be.svg" alt="React" class="h-14" />
+                        <img src="/img/tech/mysql-webcrafters-be.svg" alt="MySQL" class="h-14" />
+                        <img src="/img/tech/ubuntu-webcrafters-be.svg" alt="Ubuntu" class="h-14" />
+                        <img src="/img/tech/php-webcrafters-be.svg" alt="PHP" class="h-14" />
+                    </div>
+                    <div class="flex space-x-16">
+                        <img src="/img/tech/dotnet-webcrafters-be.svg" alt=".NET" class="h-14" />
+                        <img src="/img/tech/csharp-webcrafters-be.svg" alt="C#" class="h-14" />
+                        <img src="/img/tech/react-webcrafters-be.svg" alt="React" class="h-14" />
+                        <img src="/img/tech/mysql-webcrafters-be.svg" alt="MySQL" class="h-14" />
+                        <img src="/img/tech/ubuntu-webcrafters-be.svg" alt="Ubuntu" class="h-14" />
+                        <img src="/img/tech/php-webcrafters-be.svg" alt="PHP" class="h-14" />
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-gray-400 mt-6">
                 We bouwen niet alleen voor klanten, maar ontwikkelen ook eigen producten en AI-tools.
             </p>
         </div>
@@ -16,8 +40,8 @@
                     Onze eigen streamingtechnologie in .NET MAUI. Probeer de demo:
                 </p>
                 <audio controls class="w-full">
-                    <source src="/audio/demo1.mp3" type="audio/mpeg">
-                    <source src="/audio/demo2.mp3" type="audio/mpeg">
+                    <source src="/Audio/Demo1.mp3" type="audio/mpeg">
+                    <source src="/Audio/Demo2.mp3" type="audio/mpeg">
                     Je browser ondersteunt geen audio.
                 </audio>
                 <p class="text-sm text-gray-500 mt-2">Demo-tracks ter illustratie</p>
@@ -57,3 +81,4 @@
         </div>
     </div>
 </section>
+

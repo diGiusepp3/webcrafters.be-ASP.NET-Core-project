@@ -1,24 +1,46 @@
-﻿// FILE: Controllers/DomainController.cs
-using Microsoft.AspNetCore.Mvc;
-using webcrafters.be_ASP.NET_Core_project.Services;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace webcrafters.be_ASP.NET_Core_project.Controllers
 {
-    [Route("[controller]")]
     public class DomainController : Controller
     {
-        private readonly TransipDomainService _domainService;
-
-        public DomainController(TransipDomainService domainService)
+        [HttpPost]
+        public IActionResult Check(string domain)
         {
-            _domainService = domainService;
+            if (string.IsNullOrWhiteSpace(domain))
+            {
+                TempData["Error"] = "Geef een domeinnaam in.";
+                return RedirectToAction("Index", "Home", new { section = "domeinnaam" });
+            }
+
+            try
+            {
+                // Als DNS lookup lukt → domein bestaat al
+                var host = System.Net.Dns.GetHostEntry(domain);
+
+                TempData["Error"] = $"❌ Domeinnaam {domain} is al geregistreerd.";
+                TempData["DomainTaken"] = domain; // zet domeinnaam door naar view
+            }
+            catch (System.Net.Sockets.SocketException)
+            {
+                // Geen DNS record → domein is beschikbaar
+                TempData["Success"] = $"✅ Domeinnaam {domain} is beschikbaar!";
+            }
+
+            return RedirectToAction("Index", "Home", new { section = "domeinnaam" });
         }
 
-        [HttpPost("Check")]
-        public async Task<IActionResult> Check(string domain)
+        [HttpGet]
+        public IActionResult Transfer(string domain)
         {
-            var (success, message) = await _domainService.CheckAvailabilityAsync(domain);
-            return Json(new { success, message });
+            if (string.IsNullOrWhiteSpace(domain))
+            {
+                TempData["Error"] = "Geen domeinnaam opgegeven om te verhuizen.";
+                return RedirectToAction("Index", "Home", new { section = "domeinnaam" });
+            }
+
+            ViewBag.Domain = domain;
+            return View(); // je maakt straks Views/Domain/Transfer.cshtml
         }
     }
 }

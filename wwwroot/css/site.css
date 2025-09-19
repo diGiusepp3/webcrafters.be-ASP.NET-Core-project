@@ -1,31 +1,37 @@
-html {
-  font-size: 14px;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Eigen CSS */
+.height-15 {
+  height: 60px;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+/* Slider animatie normaal */
+@keyframes tech-slide {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+/* Slider animatie reverse */
+@keyframes tech-slide-reverse {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+.tech-animate {
+  display: flex;
+  width: 200%; /* dubbele set iconen voor naadloze loop */
+  animation: tech-slide 25s linear infinite;
 }
 
-body {
-  margin-bottom: 60px;
+.tech-animate-reverse {
+  display: flex;
+  width: 200%; /* dubbele set iconen voor naadloze loop */
+  animation: tech-slide-reverse 25s linear infinite;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
-}
-
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+.tech-animate:hover,
+.tech-animate-reverse:hover {
+  animation-play-state: paused; /* stop animatie bij hover */
 }

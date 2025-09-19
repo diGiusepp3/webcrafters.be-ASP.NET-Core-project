@@ -4,31 +4,17 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>webcrafters.be_ASP.NET_Core_project</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.9">
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        <PrivateAssets>all</PrivateAssets>
-      </PackageReference>
-      <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
-      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.3.1" />
-      <PackageReference Include="Twilio" Version="7.13.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.8" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
+        <PackageReference Include="Twilio" Version="6.3.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <AdditionalFiles Include="Views\Home\_Hero.cshtml" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="wwwroot\Audio\" />
-      <Folder Include="wwwroot\img\blog\uploadsFromSite\" />
-      <Folder Include="wwwroot\img\users\2\" />
-      <Folder Include="wwwroot\img\users\3\" />
-      <Folder Include="wwwroot\img\users\4\" />
-      <Folder Include="wwwroot\img\users\5\" />
-    </ItemGroup>
 </Project>
- 
