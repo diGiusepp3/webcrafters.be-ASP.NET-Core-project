@@ -18,4 +18,8 @@
         <PackageReference Include="Twilio" Version="6.3.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <AdditionalFiles Include="Views\Domain\_DomainOrder.cshtml" />
+    </ItemGroup>
+
 </Project>

@@ -1,9 +1,6 @@
-﻿// FILE: Services/TransipAuthService.cs
-using System.IdentityModel.Tokens.Jwt;
+﻿// File: Services/TransipAuthService.cs
 using System.Security.Cryptography;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 
 namespace webcrafters.be_ASP.NET_Core_project.Services
@@ -15,87 +12,94 @@ namespace webcrafters.be_ASP.NET_Core_project.Services
         private string? _cachedToken;
         private DateTime _expiresAt = DateTime.MinValue;
 
-        public TransipAuthService(IConfiguration config, HttpClient httpClient)
+        public TransipAuthService(IConfiguration config)
         {
             _config = config;
-            _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("https://api.transip.nl/v6/");
+            _httpClient = new HttpClient { BaseAddress = new Uri("https://api.transip.nl/v6/") };
         }
 
         public async Task<string> GetAccessTokenAsync()
         {
-            // Reuse token if still valid
+            // ✅ Cache check
             if (!string.IsNullOrEmpty(_cachedToken) && DateTime.UtcNow < _expiresAt)
             {
+                Console.WriteLine("🔑 Cached token hergebruikt (geldig tot " + _expiresAt + ")");
                 return _cachedToken;
             }
 
             var login = _config["Transip:Login"];
             var privateKeyPath = _config["Transip:PrivateKeyPath"];
+            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(privateKeyPath))
+                throw new Exception("❌ TransIP config ontbreekt (Login of PrivateKeyPath)");
+
             var fullPath = Path.GetFullPath(privateKeyPath);
-
             if (!File.Exists(fullPath))
-            {
-                throw new FileNotFoundException($"❌ Key file not found at {fullPath}");
-            }
-
-            Console.WriteLine($"✅ Key file gevonden: {fullPath}");
+                throw new Exception($"❌ Key file niet gevonden op: {fullPath}");
 
             var privateKey = await File.ReadAllTextAsync(fullPath);
-            Console.WriteLine($"✅ Key file ingelezen, lengte: {privateKey.Length} tekens");
 
-            var readOnly = bool.Parse(_config["Transip:ReadOnly"] ?? "false");
+            // ✅ Nonce 16 tekens
+            var nonce = GenerateNonce();
+            var bodyObj = new { login, nonce };
+            var bodyJson = JsonSerializer.Serialize(bodyObj);
 
+            Console.WriteLine("📦 Request body: " + bodyJson);
+
+            // ✅ Signeren
             var rsa = RSA.Create();
             rsa.ImportFromPem(privateKey);
 
-            // Maak JWT
-            var handler = new JwtSecurityTokenHandler();
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Issuer = login,
-                Claims = new Dictionary<string, object>
-                {
-                    { "sub", login },
-                    { "login", login },
-                    { "read_only", readOnly }
-                },
-                Expires = DateTime.UtcNow.AddMinutes(5), // JWT zelf is kort geldig
-                SigningCredentials = new SigningCredentials(new RsaSecurityKey(rsa), SecurityAlgorithms.RsaSha256)
-            };
+            var data = Encoding.UTF8.GetBytes(bodyJson);
+            var signatureBytes = rsa.SignData(data, HashAlgorithmName.SHA512, RSASignaturePadding.Pkcs1);
+            var signatureBase64 = Convert.ToBase64String(signatureBytes);
 
-            var jwt = handler.CreateJwtSecurityToken(tokenDescriptor);
-            var jwtString = handler.WriteToken(jwt);
-            
-            Console.WriteLine("JWT payload: " + handler.WriteToken(jwt));
+            Console.WriteLine("🔏 Signature (eerste 60 chars): " + signatureBase64.Substring(0, Math.Min(60, signatureBase64.Length)));
 
-
-            // Nonce + login in body
-            var nonce = Guid.NewGuid().ToString();
+            // ✅ Request
             var request = new HttpRequestMessage(HttpMethod.Post, "auth")
             {
-                Content = JsonContent.Create(new { login, nonce })
+                Content = new StringContent(bodyJson, Encoding.UTF8, "application/json")
             };
-            request.Headers.Add("Signature", jwtString);
+            request.Headers.Add("Signature", signatureBase64);
 
             var response = await _httpClient.SendAsync(request);
-            var body = await response.Content.ReadAsStringAsync();
+            var raw = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine("🌐 TransIP response: " + raw);
 
             if (!response.IsSuccessStatusCode)
+                throw new Exception($"❌ Auth failed ({response.StatusCode}): {raw}");
+
+            // ✅ JSON parsing
+            using var doc = JsonDocument.Parse(raw);
+
+            if (!doc.RootElement.TryGetProperty("token", out var tokenProp))
+                throw new Exception("❌ Response bevat geen 'token': " + raw);
+
+            _cachedToken = tokenProp.GetString();
+
+            if (doc.RootElement.TryGetProperty("expirationTime", out var expProp) &&
+                expProp.TryGetInt64(out var expSecs))
             {
-                throw new Exception($"TransIP auth failed ({response.StatusCode}): {body}");
+                _expiresAt = DateTime.UtcNow.AddSeconds(expSecs - 60);
+            }
+            else
+            {
+                _expiresAt = DateTime.UtcNow.AddMinutes(10); // fallback
             }
 
-            var json = JsonDocument.Parse(body);
-            var token = json.RootElement.GetProperty("token").GetString();
-            var expiration = json.RootElement.TryGetProperty("expirationTime", out var expProp)
-                ? expProp.GetInt64()
-                : 3600; // fallback: 1h
+            Console.WriteLine("✅ Token ontvangen (eerste 40 chars): " +
+                _cachedToken?.Substring(0, Math.Min(40, _cachedToken.Length)));
 
-            _cachedToken = token!;
-            _expiresAt = DateTime.UtcNow.AddSeconds(expiration - 60); // 1 min speling
+            return _cachedToken!;
+        }
 
-            return _cachedToken;
+        private string GenerateNonce()
+        {
+            using var rng = RandomNumberGenerator.Create();
+            var bytes = new byte[16];
+            rng.GetBytes(bytes);
+            return Convert.ToHexString(bytes).ToLower().Substring(0, 16); // 16 tekens
         }
     }
 }

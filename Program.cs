@@ -1,3 +1,4 @@
+// File: Program.cs
 using Microsoft.EntityFrameworkCore;
 using webcrafters.be_ASP.NET_Core_project.Models;
 using webcrafters.be_ASP.NET_Core_project.Services;
@@ -5,8 +6,18 @@ using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Console.WriteLine("🚀 Startup: Program.cs gestart");
+
 // ✅ Laad .env (alleen aanwezig bij local dev, niet in productie)
-Env.Load();
+try
+{
+    Env.Load();
+    Console.WriteLine("📂 .env geladen (indien aanwezig).");
+}
+catch (Exception ex)
+{
+    Console.WriteLine("⚠️ Kon .env niet laden: " + ex.Message);
+}
 
 // ✅ Config sources (JSON + Environment Variables)
 builder.Configuration
@@ -14,9 +25,20 @@ builder.Configuration
     .AddEnvironmentVariables();
 
 // ✅ Database connectie uit ENV
+var conn = builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrWhiteSpace(conn))
+{
+    Console.WriteLine("❌ Geen ConnectionString gevonden! Controleer appsettings.json of .env");
+}
+else
+{
+    Console.WriteLine("🔗 ConnectionString gevonden:");
+    Console.WriteLine(conn);
+}
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
+        conn,
         new MySqlServerVersion(new Version(8, 0, 36)), // pas versie aan indien nodig
         mySqlOptions => mySqlOptions.EnableRetryOnFailure(
             maxRetryCount: 5,
@@ -26,17 +48,20 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     )
 );
 
-Console.WriteLine("ConnectionString:");
-Console.WriteLine(builder.Configuration.GetConnectionString("DefaultConnection") ?? "NULL");
-
 // ✅ SiteSettings uit appsettings.json
-builder.Services.Configure<SiteSettings>(
-    builder.Configuration.GetSection("SiteSettings")
-);
+var siteSettings = builder.Configuration.GetSection("SiteSettings");
+if (!siteSettings.Exists())
+{
+    Console.WriteLine("⚠️ Geen SiteSettings gevonden in appsettings.json");
+}
+builder.Services.Configure<SiteSettings>(siteSettings);
 
 // ✅ TransIP services
-builder.Services.AddHttpClient<TransipAuthService>();
-builder.Services.AddHttpClient<TransipDomainService>();
+var transipLogin = builder.Configuration["Transip:Login"];
+var transipKey = builder.Configuration["Transip:PrivateKeyPath"];
+Console.WriteLine($"🔑 TransIP settings: Login={transipLogin}, Key={transipKey}");
+builder.Services.AddSingleton<TransipAuthService>();
+builder.Services.AddSingleton<TransipDomainService>();
 
 // ✅ Twilio SMS-service
 builder.Services.AddSingleton<SmsService>();
@@ -56,8 +81,13 @@ var app = builder.Build();
 // ✅ Middleware pipeline
 if (!app.Environment.IsDevelopment())
 {
+    Console.WriteLine("🌍 Running in PRODUCTION mode");
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
+}
+else
+{
+    Console.WriteLine("💻 Running in DEVELOPMENT mode");
 }
 
 app.UseHttpsRedirection();
@@ -73,4 +103,5 @@ app.MapControllerRoute(
 
 app.MapRazorPages();
 
+Console.WriteLine("✅ App klaar voor gebruik. Listening...");
 app.Run();

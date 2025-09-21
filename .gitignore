@@ -60,6 +60,7 @@ node_modules/
 *.pem
 *.pfx
 *.crt
+*.env
 .env
 
 # Specifieke keys map

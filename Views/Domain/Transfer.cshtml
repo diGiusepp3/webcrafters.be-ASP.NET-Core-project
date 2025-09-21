@@ -1,27 +1,39 @@
-﻿@{
-    ViewData["Title"] = "Domein verhuizen";
-}
-<section class="relative w-full py-20 bg-gradient-to-b from-black via-gray-900 to-black">
-    <div class="max-w-3xl mx-auto px-6">
-        <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-6">
-            🔄 Verhuis jouw domeinnaam
-        </h1>
-        <p class="text-gray-400 mb-8">
-            Domeinnaam <span class="text-white font-semibold">@ViewBag.Domain</span> is al geregistreerd.
-            Wil je hem verhuizen naar WebCrafters? Vul hieronder je verhuiscode (EPP/Auth code) in om de transfer te starten.
-        </p>
+﻿@model webcrafters.be_ASP.NET_Core_project.Models.DomainTransferViewModel
 
-        <form method="post" asp-controller="Domain" asp-action="DoTransfer" class="space-y-6">
-            <input type="hidden" name="domain" value="@ViewBag.Domain" />
-            <div>
-                <label class="block text-gray-300 mb-2">Verhuiscode (EPP/Auth)</label>
-                <input type="text" name="transferCode" placeholder="bv. X4Y9-ZZ33-ABCD"
-                       class="w-full rounded-lg bg-gray-800 border border-gray-700 text-gray-200 p-3 focus:outline-none focus:border-purple-500" required />
-            </div>
-            <button type="submit"
-                    class="px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg text-white font-semibold shadow-lg transition">
-                Start verhuizing 🚀
-            </button>
-        </form>
-    </div>
+<section class="max-w-2xl mx-auto px-6 py-12">
+    <h1 class="text-2xl font-bold mb-6">Verhuis domeinnaam: @Model.Domain</h1>
+
+    <form asp-action="Transfer" method="post" class="space-y-6">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Domain" />
+
+        <div>
+            <label class="block text-sm text-gray-300">Autorisatiecode (EPP)</label>
+            <input asp-for="AuthCode" class="w-full p-3 rounded bg-gray-800 border border-gray-600 text-white" required />
+        </div>
+
+        <div>
+            <label class="block text-sm text-gray-300">Naam houder</label>
+            <input asp-for="HolderName" class="w-full p-3 rounded bg-gray-800 border border-gray-600 text-white" required />
+        </div>
+
+        <div>
+            <label class="block text-sm text-gray-300">E-mail houder</label>
+            <input asp-for="HolderEmail" type="email" class="w-full p-3 rounded bg-gray-800 border border-gray-600 text-white" required />
+        </div>
+
+        <div class="p-4 bg-gray-900 border border-gray-700 rounded">
+            <p><strong>Kostenoverzicht voor verhuis:</strong></p>
+            <ul class="text-left mt-2">
+                <li>Basisprijs TransIP: €@Model.PriceExVat.ToString("0.00") @Model.Currency</li>
+                <li>+ 21% btw: €@Model.PriceInclVat.ToString("0.00") @Model.Currency</li>
+                <li>+ 40% marge: <strong class="text-green-400">€@Model.FinalPrice.ToString("0.00") @Model.Currency / jaar</strong></li>
+            </ul>
+        </div>
+
+        <button type="submit"
+                class="px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg font-semibold text-white shadow">
+            Verder naar betaling
+        </button>
+    </form>
 </section>
